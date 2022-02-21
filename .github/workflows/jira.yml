@@ -1,0 +1,26 @@
+on:
+  push
+
+name: Test Transition Issue
+
+jobs:
+  test-transition-issue:
+    name: Transition Issue
+    runs-on: ubuntu-latest
+    steps:
+    - name: Login
+      uses: atlassian/gajira-login@master
+      env:
+        JIRA_BASE_URL: "https://merico.atlassian.net/jira/software/projects/HEAP/boards/77"
+        JIRA_USER_EMAIL: "fangbao.li@merico.dev"
+        JIRA_API_TOKEN: "fCzuTaB1zlYVjJgCBudZ4F81"
+        
+    - name: Create new issue
+      id: create
+      uses: atlassian/gajira-create@master
+
+    - name: Transition issue
+      uses: atlassian/gajira-transition@master
+      with:
+        issue: ${{ steps.create.outputs.issue }}
+        transition: "In progress"
