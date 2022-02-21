@@ -1,10 +1,13 @@
+name: Issues Builder
 on:
-  push
-
-name: Test Transition Issue
+  issues:
+    types: [opened, reopened, edited, closed]
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   test-transition-issue:
+    if: ${{ github.event_name == 'issues' }}
     name: Transition Issue
     runs-on: ubuntu-latest
     steps:
